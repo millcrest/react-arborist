@@ -342,6 +342,7 @@ export class TreeApi<T> {
     if (!node) return;
     const id = identify(node);
     this.dispatch(selection.remove(id));
+    safeRun(this.props.onSelect, this.selectedNodes);
   }
 
   selectMulti(identity: Identity) {
@@ -593,12 +594,12 @@ export class TreeApi<T> {
 
   isEditable(data: T) {
     const check = this.props.disableEdit || (() => false);
-    return !utils.access(data, check) ?? true;
+    return !utils.access(data, check);
   }
 
   isDraggable(data: T) {
     const check = this.props.disableDrag || (() => false);
-    return !utils.access(data, check) ?? true;
+    return !utils.access(data, check);
   }
 
   isDragging(node: string | IdObj | null) {
